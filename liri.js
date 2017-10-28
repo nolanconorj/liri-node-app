@@ -4,8 +4,10 @@ console.log(keys);
 //-------------------------------
 //REQUIRES
 var Twitter = require("twitter");
+var Spotify = require('node-spotify-api');
 
 //Make it so liri.js can take in one of the following commands. List out commands.
+//Argument 1
 var command = process.argv[2];
 
 switch (command) {
@@ -25,6 +27,19 @@ switch (command) {
       doit();
       break;
   };
+
+  //Argument 2
+  var command2 = process.argv[3];
+  switch (command) {
+    case "song-name":
+    songName();
+      break;
+  
+    case "movie-name":
+      movieName();
+      break;
+  };
+
 //---------------------------------
 //FUNCTIONS
 //TWITTER--------------------------
@@ -52,9 +67,23 @@ function tweets() {
         } 
       });  
 };
-
+//----------------------------------
+//SPOTIFY---------------------------
 function spotify() {
     console.log("works2!!");
+
+    var spotify = new Spotify({
+        id: keys.id,
+        secret: keys.secret       
+      });
+       
+      spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+       
+      console.log(data); 
+      });
         };
 
 function movie() {
